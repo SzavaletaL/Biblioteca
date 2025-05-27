@@ -1,5 +1,6 @@
 -- Crear la base de datos
 CREATE DATABASE Biblioteca;
+
 USE Biblioteca;
 
 -- Tabla AUTOR
@@ -22,7 +23,7 @@ CREATE TABLE Ejemplar (
     Codigo INT PRIMARY KEY,
     Localizacion VARCHAR(100),
     CodigoLibro INT,
-    FOREIGN KEY (CodigoLibro) REFERENCES Libro(Codigo)
+    FOREIGN KEY (CodigoLibro) REFERENCES Libro (Codigo)
 );
 
 -- Tabla USUARIO
@@ -38,8 +39,8 @@ CREATE TABLE Escribe (
     CodigoAutor INT,
     CodigoLibro INT,
     PRIMARY KEY (CodigoAutor, CodigoLibro),
-    FOREIGN KEY (CodigoAutor) REFERENCES Autor(Codigo),
-    FOREIGN KEY (CodigoLibro) REFERENCES Libro(Codigo)
+    FOREIGN KEY (CodigoAutor) REFERENCES Autor (Codigo),
+    FOREIGN KEY (CodigoLibro) REFERENCES Libro (Codigo)
 );
 
 -- Tabla intermedia SACA (relación N:M entre USUARIO y EJEMPLAR)
@@ -48,7 +49,11 @@ CREATE TABLE Saca (
     CodigoEjemplar INT,
     FechaPres DATE,
     FechaDev DATE,
-    PRIMARY KEY (CodigoUsuario, CodigoEjemplar, FechaPres),
-    FOREIGN KEY (CodigoUsuario) REFERENCES Usuario(Codigo),
-    FOREIGN KEY (CodigoEjemplar) REFERENCES Ejemplar(Codigo)
+    PRIMARY KEY (
+        CodigoUsuario,
+        CodigoEjemplar,
+        FechaPres
+    ),
+    FOREIGN KEY (CodigoUsuario) REFERENCES Usuario (Codigo),
+    FOREIGN KEY (CodigoEjemplar) REFERENCES Ejemplar (Codigo)
 )
