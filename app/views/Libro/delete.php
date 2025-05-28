@@ -1,14 +1,17 @@
-<h2>Eliminar Usuario</h2>
+<?php
+include 'conexion.php';
 
-<p>¿Estás seguro de que deseas eliminar al siguiente usuario?</p>
+if (isset($_GET['codigo'])) {
+    $codigo = $_GET['codigo'];
 
-<ul>
-    <li><strong>Nombre:</strong> <?= $usuario['Nombre'] ?></li>
-    <li><strong>Teléfono:</strong> <?= $usuario['Telefono'] ?></li>
-    <li><strong>Dirección:</strong> <?= $usuario['Direccion'] ?></li>
-</ul>
+    $sql = "DELETE FROM Libro WHERE Codigo='$codigo'";
 
-<form method="POST">
-    <button type="submit" name="confirmar">Sí, eliminar</button>
-    <a href="index.php?controller=usuario&action=index">Cancelar</a>
-</form>
+    if ($conn->query($sql) === TRUE) {
+        header("Location: index.php");
+    } else {
+        echo "Error al eliminar: " . $conn->error;
+    }
+} else {
+    header("Location: index.php");
+}
+?>
