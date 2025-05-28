@@ -2,22 +2,30 @@
 
 <h1>Lista de Autores</h1>
 <a href="/autor/crear">Nuevo Autor</a>
+
 <table>
     <tr>
         <th>Código</th>
         <th>Nombre</th>
         <th>Acciones</th>
     </tr>
-    <?php foreach ($autores as $autor): ?>
+
+    <?php if (!empty($autores)): ?>
+        <?php foreach ($autores as $autor): ?>
+            <tr>
+                <td><?= htmlspecialchars($autor['Codigo']) ?></td>
+                <td><?= htmlspecialchars($autor['Nombre']) ?></td>
+                <td>
+                    <a href="/autor/editar/<?= $autor['Codigo'] ?>">Editar</a>
+                    <a href="/autor/eliminar/<?= $autor['Codigo'] ?>">Eliminar</a>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
         <tr>
-            <td><?= $autor['Codigo'] ?></td>
-            <td><?= $autor['Nombre'] ?></td>
-            <td>
-                <a href="/autor/editar/<?= $autor['Codigo'] ?>">Editar</a>
-                <a href="/autor/eliminar/<?= $autor['Codigo'] ?>">Eliminar</a>
-            </td>
+            <td colspan="3">No se encontraron autores</td>
         </tr>
-    <?php endforeach; ?>
+    <?php endif; ?>
 </table>
 
 <?php require '../layouts/footer.php'; ?>
