@@ -20,3 +20,10 @@ if (file_exists($envFile)) {
 }
 
 // Luego continúa con el resto del código...
+// Después de cargar el .env
+require __DIR__ . '/../app/core/Database.php';
+$db = new Database();
+
+// Inicializar modelos y controladores
+$autorModel = new AutorModel($db->getConnection());
+$autorController = new AutorController($autorModel);
