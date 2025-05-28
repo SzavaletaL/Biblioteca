@@ -8,34 +8,40 @@ class AutorModel
         $this->db = $db;
     }
 
-    // Obtener todos los autores
     public function getAll()
     {
-        $stmt = $this->db->query("SELECT * FROM Autor");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        try {
+            $stmt = $this->db->query("SELECT * FROM Autor");
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Registrar error
+            error_log("Error en AutorModel::getAll(): " . $e->getMessage());
+            return [];
+        }
     }
 
-    // Crear un autor
+    public function getById($id)
+    {
+        $stmt = $this->db->prepare("SELECT * FROM Autor WHERE Codigo = ?");
+        $stmt->execute([$id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function create($nombre)
     {
-        $sql = "INSERT INTO Autor (Nombre) VALUES (?)";
-        $stmt = $this->db->prepare($sql);
+        $stmt = $this->db->prepare("INSERT INTO Autor (Nombre) VALUES (?)");
         return $stmt->execute([$nombre]);
     }
 
-    // Actualizar autor
-    public function update($codigo, $nombre)
+    public function update($id, $nombre)
     {
-        $sql = "UPDATE Autor SET Nombre = ? WHERE Codigo = ?";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$nombre, $codigo]);
+        $stmt = $this->db->prepare("UPDATE Autor SET Nombre = ? WHERE Codigo = ?");
+        return $stmt->execute([$nombre, $id]);
     }
 
-    // Eliminar autor
-    public function delete($codigo)
+    public function delete($id)
     {
-        $sql = "DELETE FROM Autor WHERE Codigo = ?";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$codigo]);
+        $stmt = $this->db->prepare("DELETE FROM Autor WHERE Codigo = ?");
+        return $stmt->execute([$id]);
     }
 }

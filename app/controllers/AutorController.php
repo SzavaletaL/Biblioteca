@@ -8,49 +8,56 @@ class AutorController
         $this->model = $model;
     }
 
-    // Listar autores
     public function index()
     {
         $autores = $this->model->getAll();
-        require '../views/Autor/index.php';
+        require __DIR__ . '/../views/Autor/index.php';
     }
 
-    // Mostrar formulario de creación
     public function crearForm()
     {
-        require '../views/Autor/crear.php';
+        require __DIR__ . '/../views/Autor/crear.php';
     }
 
-    // Procesar creación
     public function crear()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->model->create($_POST['nombre']);
+            $nombre = $_POST['nombre'] ?? '';
+            if (!empty($nombre)) {
+                $this->model->create($nombre);
+            }
             header('Location: /autor');
+            exit;
         }
     }
 
-    // Mostrar formulario de edición
-    public function editarForm($codigo)
+    public function editarForm($id)
     {
-        // Necesitarías un método en el modelo para obtener un autor por código
-        $autor = $this->model->getById($codigo);
-        require '../views/Autor/editar.php';
+        $autor = $this->model->getById($id);
+        if ($autor) {
+            require __DIR__ . '/../views/Autor/editar.php';
+        } else {
+            header('Location: /autor');
+            exit;
+        }
     }
 
-    // Procesar edición
-    public function editar($codigo)
+    public function editar($id)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $this->model->update($codigo, $_POST['nombre']);
+            $nombre = $_POST['nombre'] ?? '';
+            if (!empty($nombre)) {
+                $this->model->update($id, $nombre);
+            }
             header('Location: /autor');
+            exit;
         }
     }
 
-    // Eliminar autor
-    public function eliminar($codigo)
+    public function eliminar($id)
     {
-        $this->model->delete($codigo);
+        $this->model->delete($id);
         header('Location: /autor');
+        exit;
     }
 }
