@@ -1,6 +1,7 @@
+<?php require 'vista/layout/header.php'; ?>
 <!DOCTYPE html>
 <html>
-<head>
+<head>  
     <title>Nuevo Autor</title>
 </head>
 <body>
@@ -14,3 +15,4 @@
     </form>
 </body>
 </html>
+<?php require 'vista/layout/footer.php'; ?>

@@ -1,3 +1,4 @@
+<?php require 'vista/layout/header.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,3 +19,4 @@
     </form>
 </body>
 </html>
+<?php require 'vista/layout/footer.php'; ?>
